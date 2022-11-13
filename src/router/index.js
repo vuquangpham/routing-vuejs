@@ -1,11 +1,36 @@
 import { createRouter, createWebHistory } from "vue-router";
+import TeamsList from "../components/teams/TeamsList.vue";
+import TeamMembers from "../components/teams/TeamMembers.vue";
+import UsersList from "../components/users/UsersList";
+import NotFound from "../components/nav/NotFound";
 
 const routes = [
-  // {
-  //   path: '/',
-  //   name: 'home',
-  //   component: HomeView
-  // },
+  {
+    path: "/",
+    redirect: "/teams",
+  },
+  {
+    path: "/teams",
+    name: "team",
+    component: TeamsList,
+    children: [
+      {
+        path: ":teamId",
+        name: "team-members",
+        component: TeamMembers,
+        props: true,
+      },
+    ],
+  },
+  {
+    path: "/users",
+    name: "users",
+    component: UsersList,
+  },
+  {
+    path: "/:notFound(/*)",
+    component: NotFound,
+  },
   // {
   //   path: '/about',
   //   name: 'about',
@@ -19,6 +44,8 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+  linkActiveClass: "active",
+  linkExactActiveClass: "exact-active",
 });
 
 export default router;
