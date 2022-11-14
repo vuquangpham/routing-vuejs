@@ -3,6 +3,8 @@ import TeamsList from "../components/teams/TeamsList.vue";
 import TeamMembers from "../components/teams/TeamMembers.vue";
 import UsersList from "../components/users/UsersList";
 import NotFound from "../components/nav/NotFound";
+import TeamFooter from "../components/teams/TeamFooter";
+import UserFooter from "../components/users/UserFooter";
 
 const routes = [
   {
@@ -12,7 +14,10 @@ const routes = [
   {
     path: "/teams",
     name: "team",
-    component: TeamsList,
+    components: {
+      default: TeamsList,
+      footer: TeamFooter,
+    },
     children: [
       {
         path: ":teamId",
@@ -25,7 +30,10 @@ const routes = [
   {
     path: "/users",
     name: "users",
-    component: UsersList,
+    components: {
+      default: UsersList,
+      footer: UserFooter,
+    },
   },
   {
     path: "/:notFound(/*)",
@@ -46,6 +54,25 @@ const router = createRouter({
   routes,
   linkActiveClass: "active",
   linkExactActiveClass: "exact-active",
+  scrollBehavior(to, from, savedPosition) {
+    // to, from ~~ similar to this.$route
+    // savedPosition is only set when we use the "back-button"
+    // when back to what's left
+    // return the object that browser should scroll To
+
+    console.log("to:", to);
+    console.log("from:", from);
+    console.log("savedPosition:", savedPosition);
+
+    if (savedPosition) {
+      return savedPosition;
+    }
+
+    return {
+      top: 0,
+      left: 0,
+    };
+  },
 });
 
 export default router;

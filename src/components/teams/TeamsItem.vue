@@ -11,7 +11,11 @@ export default {
   props: ["name", "memberCount", "id"],
   computed: {
     teamMembersLink() {
-      return { name: "team-members", params: { teamId: this.id } };
+      return {
+        name: "team-members",
+        params: { teamId: this.id },
+        query: { sort: "asc" }, // access in component through this.$route.query
+      };
     },
   },
 };
