@@ -6,6 +6,7 @@
       :name="user.fullName"
       :role="user.role"
     />
+    <button @click="changesSaved = true">Saved Change</button>
   </ul>
 </template>
 
@@ -17,6 +18,19 @@ export default {
     UserItem,
   },
   inject: ["users"],
+  data() {
+    return {
+      changesSaved: false,
+    };
+  },
+  beforeRouteLeave(to, from, next) {
+    console.log("before route leave");
+    if (this.changesSaved) {
+      return next();
+    }
+    const answ = confirm("Are you sure? You got unsaved change");
+    next(answ);
+  },
 };
 </script>
 

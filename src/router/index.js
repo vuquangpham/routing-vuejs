@@ -18,6 +18,7 @@ const routes = [
       default: TeamsList,
       footer: TeamFooter,
     },
+    meta: { needAuth: true },
     children: [
       {
         path: ":teamId",
@@ -36,6 +37,7 @@ const routes = [
     },
     beforeEnter(to, from, next) {
       console.log(to, from, next);
+      next();
     },
   },
   {
@@ -82,6 +84,10 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   // next(true/false)
   // next('/teams/t2')
+
+  if (to.meta.needAuth) {
+    // do some validate
+  }
 
   next();
   // return;
