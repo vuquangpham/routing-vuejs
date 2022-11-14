@@ -51,10 +51,9 @@ export default {
   created() {
     this.loadMember(this.$route);
   },
-  watch: {
-    $route(newRoute) {
-      this.loadMember(newRoute);
-    },
+  beforeRouteUpdate(to, from, next) {
+    this.loadMember(to.params.teamId);
+    next();
   },
 };
 </script>

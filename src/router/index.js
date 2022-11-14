@@ -34,6 +34,9 @@ const routes = [
       default: UsersList,
       footer: UserFooter,
     },
+    beforeEnter(to, from, next) {
+      console.log(to, from, next);
+    },
   },
   {
     path: "/:notFound(/*)",
@@ -73,6 +76,28 @@ const router = createRouter({
       left: 0,
     };
   },
+});
+
+// navigation guard (for authentication)
+router.beforeEach((to, from, next) => {
+  // next(true/false)
+  // next('/teams/t2')
+
+  next();
+  // return;
+
+  // if (to.name === "team-members") {
+  //   next(true);
+  // } else {
+  //   // /teams/t2 => gap next() o duoi => /teams/t2 // infinite loop
+
+  //   next({
+  //     name: "team-members",
+  //     path: {
+  //       teamId: "t2",
+  //     },
+  //   });
+  // }
 });
 
 export default router;
